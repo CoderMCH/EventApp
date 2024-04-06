@@ -3,6 +3,9 @@
 # Details
 This is a React application built with TDD technique. This app will use Google Calendar API, OAuth2 authorization flow and AWS serverless functions.
 
+# Serverless functions
+AWS Lambda is chosen to be the serverless provider in this project. It will serve as an auth server for granting tokens. 
+
 # User Stories
 1. As a user, I should be able to filter events by city, so that I can see a list of events taking place in that city.
 2. As a user, I should be able to show/hide event details, so that I can see the details of events and hide it after read.
