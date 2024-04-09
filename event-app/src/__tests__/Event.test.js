@@ -32,9 +32,11 @@ describe("<Event /> component", () => {
         const EventComponent = render(<Event event={allEvents[0]} />);
         const user = userEvent.setup();
         await user.click(EventComponent.queryByText("show details"));
-console.log(allEvents[0].description === EventComponent.queryByRole("description").textContent)
+
+        // return true
+        console.log(allEvents[0].description === EventComponent.queryByRole("description").textContent)
         expect(EventComponent.queryByText("hide details")).toBeInTheDocument();
-        expect(EventComponent.queryByText(allEvents[0].description, getDefaultNormalizer())).toBeInTheDocument();
+        expect(EventComponent.queryByText(allEvents[0].description)).toBeInTheDocument();
     })
 
     // Scenario 3: User can collapse an event to hide details.
