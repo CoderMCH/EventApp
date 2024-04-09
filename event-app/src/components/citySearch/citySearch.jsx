@@ -27,7 +27,7 @@ export const CitySearch = ({ allLocations }) => {
             value={query} onChange={handleInputChanged}
         />
         {!showSuggestions ? null : 
-            <ul className="suggestions">
+            <ul className="suggestions" style={{background:"lightgreen"}}>
                 {suggestions.map((suggestion) => {
                     return <li key={suggestion} onClick={handleItemClicked}>{suggestion}</li>
                 })}
