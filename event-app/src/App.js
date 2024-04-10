@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import { EventList } from "./components/eventList/eventList"
+import { CitySearch } from './components/citySearch/citySearch.jsx';
+import { getEvents, extractLocations } from './api.js';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    const [allEvents, setAllEvents] = useState([]);
+    const [allLocations, setLocations] = useState([]);
+    const [numberOfEvents, setNumberOfEvents] = useState(32);
+    const [eventShown, setEventShown] = useState([]);
+
+    getEvents().then(events => {
+        setAllEvents(events);
+        setLocations(extractLocations(events));
+
+        let slicedArray = events.slice(0, numberOfEvents);
+        setEventShown(slicedArray);
+    });
+
+    useEffect(() => {
+        let slicedArray = allEvents.slice(0, numberOfEvents);
+        setEventShown(slicedArray);
+    }, [numberOfEvents])
+
+    return (<div className="App">
+        <CitySearch allLocations={allLocations} />
+        <input value={numberOfEvents} role='numberOfEventFilter'
+            placeholder='Number of events'
+            onChange={(ev) => {setNumberOfEvents(ev.target.value)}}
+        />
+        <EventList events={eventShown} />
     </div>
-  );
+    );
 }
 
 export default App;
