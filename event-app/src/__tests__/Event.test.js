@@ -1,6 +1,6 @@
 // src/__tests__/Event.test.js
 
-import { getDefaultNormalizer, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Event } from '../components/event/event.jsx';
 import { getEvents } from '../api.js';
@@ -29,12 +29,14 @@ describe("<Event /> component", () => {
     // Scenario 2: User can expand an event to see details.
     test("shows the details section when the user clicks on the 'show details' button", async () => {
         const allEvents = await getEvents(); 
+
+        // '\n', '{space}{space}' break queryByText() and toHaveTextContent()
+        allEvents[0].description = allEvents[0].description.replaceAll('\n', '').replaceAll('  ', '');
+
         const EventComponent = render(<Event event={allEvents[0]} />);
         const user = userEvent.setup();
         await user.click(EventComponent.queryByText("show details"));
 
-        // return true
-        console.log(allEvents[0].description === EventComponent.queryByRole("description").textContent)
         expect(EventComponent.queryByText("hide details")).toBeInTheDocument();
         expect(EventComponent.queryByText(allEvents[0].description)).toBeInTheDocument();
     })

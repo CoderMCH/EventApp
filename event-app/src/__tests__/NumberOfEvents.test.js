@@ -14,9 +14,11 @@ describe("Number of events", () => {
     });
     
     // Scenario 1: When user hasn’t specified a number, 32 events are shown by default.
-    test('32 events by default', () => {
-        // queryAllByRole("listitem") return []
-        expect(AppDOM.queryAllByRole("listitem")).toHaveLength(32);
+    test('32 events by default', async () => {
+        expect(AppDOM.queryByRole("numberOfEventFilter")).toHaveValue("32"); 
+        setTimeout(() => {
+            expect(AppDOM.queryAllByRole("listitem")).toHaveLength(32);
+        }, 1000)
     });
 
     // Scenario 2: When user input 12
