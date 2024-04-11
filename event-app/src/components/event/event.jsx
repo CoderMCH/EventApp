@@ -3,10 +3,11 @@ import './event.css'
 
 export const Event = ({ event }) => {
     const [isShowDetails, setIsShowDetails] = useState(false);
+    let date = new Date(event.start.dateTime)
 
-    return <li className="event-list-item" role="listitem">
+    return <div className="event-list-item" role="listitem">
         <h4 role="title">{event.summary}</h4>
-        <p role="start">{event.start.dateTime}</p>
+        <p role="start">{date.toLocaleDateString()}, {date.toLocaleTimeString()}</p>
         <p>@{event.summary} | <span>{event.location}</span></p>
         <div className="event-list-item-button-block">
             <button className="event-list-item-button"
@@ -20,5 +21,5 @@ export const Event = ({ event }) => {
                 <p role="description">{event.description}</p>
             </div>
         }
-    </li>
+    </div>
 }
