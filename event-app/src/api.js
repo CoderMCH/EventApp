@@ -87,9 +87,8 @@ export const getEvents = async () => {
         const url =  "https://y70uxu3xug.execute-api.us-east-2.amazonaws.com/dev/api/get-events" + "/" + token;
         const response = await fetch(url);
         const result = await response.json();
-        console.log(result)
         if (result) {
-            return result.events;
+            return result.data.items;
         } else return null; 
     }
 };

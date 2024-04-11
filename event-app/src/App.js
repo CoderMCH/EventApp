@@ -14,7 +14,7 @@ function App() {
     
     const fetchData = async () => {
         const events = await getEvents();
-        setAllEvents(events);
+        setAllEvents(events ? events : []);
         setAllLocations(extractLocations(events));
 
         filterEvents(events);
