@@ -1,7 +1,8 @@
 // src/__tests__/Event.test.js
 
-import { render } from '@testing-library/react';
+import { render, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import App from '../App'
 import { Event } from '../components/event/event.jsx';
 import { getEvents } from '../api.js';
 
@@ -53,3 +54,15 @@ describe("<Event /> component", () => {
         expect(EventComponent.queryByText(allEvents[0].description)).not.toBeInTheDocument();
     })
 })
+
+describe('<EventList /> integration', () => {
+    test('renders a list of 32 events when the app is mounted and rendered', async () => {
+        const AppComponent = render(<App />);
+        const AppDOM = AppComponent.container.firstChild;
+        const EventListDOM = AppDOM.querySelector('#event-list');
+        await waitFor(() => {
+            const EventListItems = within(EventListDOM).queryAllByRole('listitem');
+            expect(EventListItems.length).toBe(32);
+        });
+    });
+});
