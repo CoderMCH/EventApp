@@ -16,27 +16,6 @@ export const extractLocations = (events) => {
     return locations;
 };
 
-/**
- *
- * This function will fetch the list of all events
- */
-export const getEvents = async () => {
-    if (window.location.href.startsWith('http://localhost')) {
-        return mockData;
-    }
-
-    const token = await getAccessToken();
-    if (token) {
-        removeQuery();
-        const url =  "https://y70uxu3xug.execute-api.us-east-2.amazonaws.com/dev/api/get-events" + "/" + token;
-        const response = await fetch(url);
-        const result = await response.json();
-        if (result) {
-        return result.events;
-        } else return null; 
-    }
-};
-
 const removeQuery = () => {
     let newurl;
     if (window.history.pushState && window.location.pathname) {
@@ -60,6 +39,18 @@ const checkToken = async (accessToken) => {
     return result;
 };
 
+const getToken = async (code) => {
+    const encodeCode = encodeURIComponent(code);
+    console.log(encodeCode)
+    const response = await fetch(
+        'https://y70uxu3xug.execute-api.us-east-2.amazonaws.com/dev/api/token' + '/' + encodeCode
+    );
+    const { access_token } = await response.json();
+    access_token && localStorage.setItem("access_token", access_token);
+
+    return access_token;
+};
+
 export const getAccessToken = async () => {
     const accessToken = localStorage.getItem('access_token');
     const tokenCheck = accessToken && (await checkToken(accessToken));
@@ -81,13 +72,24 @@ export const getAccessToken = async () => {
     return accessToken;
 };
 
-const getToken = async (code) => {
-    const encodeCode = encodeURIComponent(code);
-    const response = await fetch(
-        'https://y70uxu3xug.execute-api.us-east-2.amazonaws.com/dev/api/token' + '/' + encodeCode
-    );
-    const { access_token } = await response.json();
-    access_token && localStorage.setItem("access_token", access_token);
+/**
+ *
+ * This function will fetch the list of all events
+ */
+export const getEvents = async () => {
+    if (window.location.href.startsWith('http://localhost')) {
+        return mockData;
+    }
 
-    return access_token;
+    const token = await getAccessToken();
+    if (token) {
+        removeQuery();
+        const url =  "https://y70uxu3xug.execute-api.us-east-2.amazonaws.com/dev/api/get-events" + "/" + token;
+        const response = await fetch(url);
+        const result = await response.json();
+        console.log(result)
+        if (result) {
+            return result.events;
+        } else return null; 
+    }
 };
