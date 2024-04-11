@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 
@@ -16,9 +16,12 @@ describe("Number of events", () => {
     // Scenario 1: When user hasn’t specified a number, 32 events are shown by default.
     test('32 events by default', async () => {
         expect(AppDOM.queryByRole("numberOfEventFilter")).toHaveValue("32"); 
-        setTimeout(() => {
+        await waitFor(() => {
             expect(AppDOM.queryAllByRole("listitem")).toHaveLength(32);
-        }, 1000)
+        })
+        // setTimeout(() => {
+        //     expect(AppDOM.queryAllByRole("listitem")).toHaveLength(32);
+        // }, 1000)
     });
 
     // Scenario 2: When user input 12

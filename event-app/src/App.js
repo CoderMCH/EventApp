@@ -3,32 +3,42 @@ import './App.css';
 import { EventList } from "./components/eventList/eventList"
 import { CitySearch } from './components/citySearch/citySearch.jsx';
 import { getEvents, extractLocations } from './api.js';
+import { NumberOfEvent } from './components/numberOfEvents/numberOfEvents.jsx';
 
 function App() {
     const [allEvents, setAllEvents] = useState([]);
-    const [allLocations, setLocations] = useState([]);
-    const [numberOfEvents, setNumberOfEvents] = useState(32);
+    const [allLocations, setAllLocations] = useState([]);
     const [eventShown, setEventShown] = useState([]);
-
-    getEvents().then(events => {
+    const [numberOfEvents, setNumberOfEvents] = useState(32);
+    const [currentCity, setCurrentCity] = useState("See all cities");
+    
+    const fetchData = async () => {
+        const events = await getEvents();
         setAllEvents(events);
-        setLocations(extractLocations(events));
+        setAllLocations(extractLocations(events));
 
-        let slicedArray = events.slice(0, numberOfEvents);
+        filterEvents(events);
+    }
+
+    const filterEvents = (events) => {
+        let slicedArray = events.filter(ev => {
+            return currentCity === "See all cities" ||
+                ev.location.toUpperCase().includes(currentCity.toUpperCase());
+        }).slice(0, numberOfEvents);
         setEventShown(slicedArray);
-    });
+    }
 
     useEffect(() => {
-        let slicedArray = allEvents.slice(0, numberOfEvents);
-        setEventShown(slicedArray);
-    }, [numberOfEvents])
+        fetchData();
+    }, [])
+
+    useEffect(() => {
+        filterEvents(allEvents);
+    }, [numberOfEvents, currentCity])
 
     return (<div className="App">
-        <CitySearch allLocations={allLocations} />
-        <input value={numberOfEvents} role='numberOfEventFilter'
-            placeholder='Number of events'
-            onChange={(ev) => {setNumberOfEvents(ev.target.value)}}
-        />
+        <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />
+        <NumberOfEvent setNumberOfEvents={setNumberOfEvents} />
         <EventList events={eventShown} />
     </div>
     );
