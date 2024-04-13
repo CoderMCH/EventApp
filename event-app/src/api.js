@@ -41,7 +41,6 @@ const checkToken = async (accessToken) => {
 
 const getToken = async (code) => {
     const encodeCode = encodeURIComponent(code);
-    console.log(encodeCode)
     const response = await fetch(
         'https://y70uxu3xug.execute-api.us-east-2.amazonaws.com/dev/api/token' + '/' + encodeCode
     );
