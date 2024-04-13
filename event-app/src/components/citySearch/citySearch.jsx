@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./citySearch.css"
 
 export const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -13,7 +14,6 @@ export const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
 
         setQuery(value);
         setSuggestions(filteredLocations);
-        // setCurrentCity(value);
 
         let infoText;
         if (filteredLocations.length === 0) {
@@ -43,7 +43,7 @@ export const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
             value={query} onChange={handleInputChanged}
         />
         {!showSuggestions ? null : 
-            <ul className="suggestions" role="list" style={{background:"lightgreen"}}>
+            <ul className="suggestions" role="list">
                 {suggestions.map((suggestion) => {
                     return <li key={suggestion} role="listitem"
                         onClick={handleItemClicked}>{suggestion}</li>
