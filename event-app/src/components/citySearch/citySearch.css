@@ -1,0 +1,23 @@
+@media screen and (min-width: 426px) {
+    #city-search {
+        width: 50%;
+        display: inline-block;
+    }    
+}
+
+ul.suggestions {
+    padding-inline-start: 0;
+    background: lightcoral;
+}
+
+ul.suggestions li {
+    list-style-type: none;
+}
+
+ul.suggestions li:hover {
+    background-color: lightblue;
+}
+
+ul.suggestions li:active {
+    background-color: rgb(56, 56, 122);
+}
