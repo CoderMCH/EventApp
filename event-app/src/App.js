@@ -4,6 +4,7 @@ import { EventList } from "./components/eventList/eventList"
 import { CitySearch } from './components/citySearch/citySearch.jsx';
 import { getEvents, extractLocations } from './api.js';
 import { NumberOfEvent } from './components/numberOfEvents/numberOfEvents.jsx';
+import { ErrorAlert, InfoAlert } from './components/alert/alert.jsx';
 
 function App() {
     const [allEvents, setAllEvents] = useState([]);
@@ -11,6 +12,8 @@ function App() {
     const [eventShown, setEventShown] = useState([]);
     const [numberOfEvents, setNumberOfEvents] = useState(32);
     const [currentCity, setCurrentCity] = useState("See all cities");
+    const [infoAlert, setInfoAlert] = useState("");
+    const [errorAlert, setErrorAlert] = useState("");
     
     const fetchData = async () => {
         const events = await getEvents();
@@ -37,8 +40,14 @@ function App() {
     }, [numberOfEvents, currentCity])
 
     return (<div className="App">
-        <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} />
-        <NumberOfEvent setNumberOfEvents={setNumberOfEvents} />
+        <div className="alerts-container">
+            {infoAlert.length ? <InfoAlert text={infoAlert}/> : null}
+            {errorAlert.length ? <ErrorAlert text={errorAlert}/> : null}
+        </div>
+        <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity}
+            setInfoAlert={setInfoAlert}
+        />
+        <NumberOfEvent setNumberOfEvents={setNumberOfEvents} setErrorAlert={setErrorAlert} />
         <EventList events={eventShown} />
     </div>
     );
