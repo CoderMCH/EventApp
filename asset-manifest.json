@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/event-app/static/css/main.28e07ff7.css",
+    "main.js": "/event-app/static/js/main.8e1b5322.js",
+    "static/js/453.a9a1a4e3.chunk.js": "/event-app/static/js/453.a9a1a4e3.chunk.js",
+    "service-worker.js": "/event-app/service-worker.js",
+    "index.html": "/event-app/index.html",
+    "main.28e07ff7.css.map": "/event-app/static/css/main.28e07ff7.css.map",
+    "main.8e1b5322.js.map": "/event-app/static/js/main.8e1b5322.js.map",
+    "453.a9a1a4e3.chunk.js.map": "/event-app/static/js/453.a9a1a4e3.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.28e07ff7.css",
+    "static/js/main.8e1b5322.js"
+  ]
+}
