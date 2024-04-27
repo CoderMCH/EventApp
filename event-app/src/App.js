@@ -5,6 +5,8 @@ import { CitySearch } from './components/citySearch/citySearch.jsx';
 import { getEvents, extractLocations } from './api.js';
 import { NumberOfEvent } from './components/numberOfEvents/numberOfEvents.jsx';
 import { ErrorAlert, InfoAlert, WarningAlert } from './components/alert/alert.jsx';
+import CityEventsChart from './components/scatterChart/scatterChart.jsx';
+import { EventGenresChart } from './components/eventGenresChart/eventGenresChart.jsx';
 
 function App() {
     const [allEvents, setAllEvents] = useState([]);
@@ -55,6 +57,10 @@ function App() {
             setInfoAlert={setInfoAlert}
         />
         <NumberOfEvent setNumberOfEvents={setNumberOfEvents} setErrorAlert={setErrorAlert} />
+        <div className='charts-container'>
+            <EventGenresChart events={allEvents} />
+            <CityEventsChart allLocations={allLocations} events={allEvents} />
+        </div>
         <EventList events={eventShown} />
     </div>
     );
